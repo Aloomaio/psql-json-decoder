@@ -1,14 +1,10 @@
-.PHONY: all install clean
+MODULE_big = json_decoder
+EXTENSION = json_decoder
 
-all:
-	$(MAKE) -C ext all
-	$(MAKE) -C client all
-	$(MAKE) -C kafka all
+OBJS = logdecoder.o oid_util.o format-json.o snapshot-json.o
 
-install:
-	$(MAKE) -C ext install
+PG_CPPFLAGS += -std=c99
 
-clean:
-	$(MAKE) -C ext clean
-	$(MAKE) -C client clean
-	$(MAKE) -C kafka clean
+PG_CONFIG = pg_config
+PGXS := $(shell $(PG_CONFIG) --pgxs)
+include $(PGXS)
